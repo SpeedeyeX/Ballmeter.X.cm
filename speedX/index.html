@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>BowlMeter Pro Max | AI Speed Gun</title>
+    <!-- Libraries -->
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+    <div class="loader"></div>
+    <h2>BowlMeter Pro Max</h2>
+    <p id="loadingMsg">Initializing AI Engine...</p>
+</div>
+
+<!-- Main App (hidden until ready) -->
+<div id="app" style="display: none;">
+    <div class="bg-animation"></div>
+    <div class="app-container">
+        <div class="dashboard">
+            <!-- Camera & Overlay -->
+            <div class="camera-zone">
+                <video id="videoFeed" autoplay playsinline muted width="640" height="480"></video>
+                <canvas id="overlayCanvas" width="640" height="480"></canvas>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="speed-card">
+                    <div class="speed-value" id="speedDisplay">0.0</div>
+                    <div class="speed-unit">km/h</div>
+                    <div class="speed-label">BOWLING SPEED</div>
+                </div>
+
+                <div class="button-group">
+                    <button id="startBtn" class="btn btn-primary">▶ START</button>
+                    <button id="stopBtn" class="btn btn-danger">⏹️ STOP</button>
+                    <button id="calibrateBtn" class="btn btn-calibrate">📏 CALIBRATE</button>
+                    <button id="colorCalibrateBtn" class="btn btn-color">🎨 AUTO COLOR</button>
+                </div>
+
+                <div class="input-group">
+                    <label>🏏 PITCH DISTANCE (meters)</label>
+                    <input type="number" id="pitchDistance" value="16.5" step="0.1" min="10" max="25">
+                </div>
+
+                <div class="input-group">
+                    <label>📏 REFERENCE DISTANCE (for calibration)</label>
+                    <input type="number" id="refDistance" value="1.0" step="0.1" min="0.3" max="5">
+                </div>
+
+                <details class="advanced">
+                    <summary>🎨 Advanced HSV Tuning</summary>
+                    <div class="hsv-controls">
+                        <label>Hue Min: <input type="range" id="hueMin" min="0" max="179" value="0"></label>
+                        <label>Hue Max: <input type="range" id="hueMax" min="0" max="179" value="179"></label>
+                        <label>Saturation Min: <input type="range" id="satMin" min="0" max="255" value="30"></label>
+                        <label>Value Min: <input type="range" id="valMin" min="0" max="255" value="80"></label>
+                    </div>
+                </details>
+
+                <div class="status-area">
+                    <div id="trackingStatus">⚙️ System Ready</div>
+                    <div id="calibStatus">📐 Calibration: Not set</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
